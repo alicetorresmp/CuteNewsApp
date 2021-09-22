@@ -9,11 +9,12 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val KEY = "NEWS"
+    private val KEY = "NEWS_INFO"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +55,15 @@ class MainActivity : AppCompatActivity() {
                 val getWebTitle = getPublication.get("webTitle")
                 val getWebUrl = getPublication.get("webUrl")
 
+                class NewsInfo : Serializable {
+                    val webTitle = getWebTitle
+                    val webUrl = getWebUrl
+                }
+
+                val newsInfo = NewsInfo()
                 val intent = Intent(this, ShowNewsActivity::class.java)
-                intent.putExtra(KEY, getWebTitle.toString())
-                intent.putExtra(KEY, getWebUrl.toString())
-                startActivity(intent)
+                intent.putExtra("NEWS_INFO", newsInfo)
             }
+            startActivity(intent)
         }
     }

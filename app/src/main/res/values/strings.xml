@@ -3,4 +3,7 @@
     <string name="edit_text_hint">search your topic</string>
     <string name="button_text">search</string>
     <string name="button_2_text">load more</string>
+    <string name="web_title">testing its name</string>
+    <string name="button_description">right pointing arrow that opens the news</string>
+    <string name="string_test">im testing its size because i think its not working right enought</string>
 </resources>

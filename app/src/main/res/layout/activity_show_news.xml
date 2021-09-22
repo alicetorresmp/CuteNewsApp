@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,7 +18,8 @@
             android:inputType="text"
             android:padding="@dimen/eight_padding"
             android:hint="@string/edit_text_hint"
-            android:importantForAutofill="yes"/>
+            android:importantForAutofill="yes"
+            android:autofillHints="none" />
 
         <Button
             android:id="@+id/search_button"
@@ -32,6 +34,8 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/eight_margin"/>
+        android:layout_marginBottom="@dimen/eight_margin"
+        android:paddingBottom="@dimen/eight_padding"
+        tools:listitem="@layout/list_item"/>
 
 </LinearLayout>
