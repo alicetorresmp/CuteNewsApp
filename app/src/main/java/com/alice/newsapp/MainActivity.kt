@@ -8,8 +8,8 @@ import com.alice.newsapp.databinding.ActivityMainBinding
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONObject
-import java.io.Serializable
+import org.json.JSONArray
+import com.alice.newsapp.ShowNewsActivity as ShowNewsActivity1
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 Request.Method.GET, url,
                 { response ->
                     try {
-                        extractDefinitionFromJson(response)
+                        extractNewsFromJson()
                     } catch (exception: Exception) {
                         exception.printStackTrace()
                     }
@@ -47,23 +47,21 @@ class MainActivity : AppCompatActivity() {
             return "https://content.guardianapis.com/$word?page=1&page-size=10&api-key=$apiKey"
         }
 
-        private fun extractDefinitionFromJson(response: String) {
-            val jsonObject = JSONObject(response)
-            val getResults = jsonObject.getJSONArray("results")
-            for (index: Int in 0..9) {
-                val getPublication = getResults.getJSONObject(index)
-                val getWebTitle = getPublication.get("webTitle")
-                val getWebUrl = getPublication.get("webUrl")
-
-                class NewsInfo : Serializable {
-                    val webTitle = getWebTitle
-                    val webUrl = getWebUrl
-                }
-
-                val newsInfo = NewsInfo()
-                val intent = Intent(this, ShowNewsActivity::class.java)
-                intent.putExtra("NEWS_INFO", newsInfo)
+    private fun extractNewsFromJson() {
+        val jsonArray = JSONArray("results")
+        val listdata = ArrayList<String>()
+        val jArray = jsonArray as JSONArray?
+        if (jArray != null) {
+            for (i in 0 until jArray.length()) {
+                listdata.add(jArray.getString(i))
             }
-            startActivity(intent)
         }
+
+        val intent =  Intent(
+            this,
+            ShowNewsActivity1::class.java
+        )
+        intent.putStringArrayListExtra(KEY, listdata)
+        startActivity(intent)
     }
+}
